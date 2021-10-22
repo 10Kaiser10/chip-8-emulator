@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = ./src/main.cpp ./src/renderer.cpp
+OBJS = ./src/main.cpp ./src/renderer.cpp ./src/chip8.cpp
 
 #CC specifies which compiler we're using
 CC = g++
@@ -13,7 +13,7 @@ LIBRARY_PATHS = -L'C:\mingw-w64\externalLibs\SDL2-2.0.16\x86_64-w64-mingw32\lib'
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
 # -Wl,-subsystem,windows gets rid of the console window
-COMPILER_FLAGS = -w -Wl,-subsystem,windows
+COMPILER_FLAGS = 
 
 #LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2

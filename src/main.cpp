@@ -1,14 +1,10 @@
 #include <iostream>
-#include <SDL.h>
+#include "chip8.h"
 #include "renderer.h"
 
 int main(int argc, char* args[])
 {
-    const int scale = 20;
-    Renderer renderer = Renderer(scale);
-
-    renderer.setPixel(10,10);
-    renderer.setPixel(50,20);
-    renderer.setPixel(30,31);
-    renderer.displayScreen();
+    CHIP8 emulator(20);
+    emulator.loadROM("D:/CODE/chip-8-emulator/ROMs/BreakOut.ch8");
+    return 0;
 }
