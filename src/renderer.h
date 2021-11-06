@@ -16,6 +16,6 @@ class Renderer{
     Renderer(int s);
     void clearScreen();
     void setPixel(int x, int y);
-    void displayScreen();
+    void displayScreen(uint32_t delay);
     ~Renderer();
 };

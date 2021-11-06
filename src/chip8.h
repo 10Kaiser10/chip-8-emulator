@@ -7,17 +7,27 @@ class CHIP8{
     
     Renderer renderer; //renderer object, emulates the screen
     
-    char* memory;    //char array for RAM
-    char* registers; //char array for 16 registers
-    short int I;     //I pointer, 16 bit
-    char delayT;     //delay timer, 8 bit
-    char soundT;     //sound timer, 8 bit
-    short int pc;    //program counter, 16 bit
-    char sp;         //stack pointer, 8 bit
-    short int* stack;//stack array, 16 bit * 16 places
+    uint8_t* memory;    //8-bit array for RAM
+    uint8_t* registers; //8-bit array for 16 registers
+    uint16_t I;     //I pointer, 16 bit
+    uint8_t delayT;     //delay timer, 8 bit
+    uint8_t soundT;     //sound timer, 8 bit
+    uint16_t pc;    //program counter, 16 bit
+    uint8_t sp;         //stack pointer, 8 bit
+    uint16_t* stack;//stack array, 16 bit * 16 places
 
     public:
     CHIP8(int s);
     void loadROM(std::string path);
     void update();
+    void perfInstruction();
+    void notImp();
+    uint16_t getNNN(uint16_t opc); 
+    uint16_t getNN(uint16_t opc); 
+    uint16_t getN(uint16_t opc); 
+    uint16_t getX(uint16_t opc); 
+    uint16_t getY(uint16_t opc); 
+    uint16_t getTop(uint16_t opc); 
+
+
 };

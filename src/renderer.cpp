@@ -52,10 +52,10 @@ void Renderer::setPixel(int x, int y)
     SDL_RenderFillRect( renderer, &r );
 }
 
-void Renderer::displayScreen()
+void Renderer::displayScreen(uint32_t delay)
 {
     SDL_RenderPresent(renderer); 
-    SDL_Delay(2000);
+    SDL_Delay(delay);
 }
 
 Renderer::~Renderer()
