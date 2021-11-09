@@ -58,6 +58,11 @@ void Renderer::displayScreen(uint32_t delay)
     SDL_Delay(delay);
 }
 
+void Renderer::drawByte(uint8_t x, uint8_t y, uint8_t byte)
+{
+	//write this
+}
+
 Renderer::~Renderer()
 {
     SDL_DestroyWindow( window );
