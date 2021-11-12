@@ -4,12 +4,12 @@
 
 int main(int argc, char* args[])
 {
-    //CHIP8 emulator(20);
-    //emulator.loadROM("D:/CODE/chip-8-emulator/ROMs/BreakOut.ch8");
-
-    //emulator.update();
-    uint16_t n = 300;
-    uint8_t nn = n;
-    std::cout<<(int)nn<<std::endl;
+    CHIP8 emulator(20);
+    emulator.loadROM("D:/CODE/chip-8-emulator/ROMs/Tetris.ch8");
+    int c=2000;
+    while(c--)
+    {
+        emulator.update();   
+    }
     return 0;
 }

@@ -21,7 +21,9 @@ class CHIP8{
     void loadROM(std::string path);
     void update();
     void perfInstruction();
-    void notImp();
+    void notImp(uint16_t opc);
+    void timerUpdate();
+    void printStatus();
     uint16_t getNNN(uint16_t opc); 
     uint16_t getNN(uint16_t opc); 
     uint16_t getN(uint16_t opc); 

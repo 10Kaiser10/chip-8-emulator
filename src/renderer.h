@@ -13,10 +13,12 @@ class Renderer{
 
     float frameRate;
 
+    bool **screenFill;
+
     Renderer(int s);
     void clearScreen();
-    void setPixel(int x, int y);
+    void setPixel(int x, int y, int c);
     void displayScreen(uint32_t delay);
-    void drawByte(uint8_t x, uint8_t y, uint8_t byte);
+    int drawByte(uint8_t x, uint8_t y, uint8_t byte);
     ~Renderer();
 };

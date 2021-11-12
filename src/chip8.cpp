@@ -27,8 +27,9 @@ void CHIP8::loadROM(std::string path)
 
 void CHIP8::update()
 {
+    //std::cout<<"Update"<<std::endl;
     //update timers
-    //timerUpdate();
+    timerUpdate();
     
     //read OP code
     //perform action
@@ -38,16 +39,23 @@ void CHIP8::update()
     renderer.displayScreen(16);
 }
 
+void CHIP8::timerUpdate()
+{
+    delayT -= 1;
+    soundT -= 1;
+}
+
 void CHIP8::perfInstruction()
 {
     //extracting opcode from memeory
+    //printStatus();
     uint16_t opcode = memory[pc];
     opcode = opcode<<8;
     opcode += memory[pc+1];
 
     //getting the most sig nibble of the opcode
     uint8_t firstNibble = getTop(opcode);
-
+    //std::cout<<std::hex<<opcode<<std::endl;
     switch (firstNibble)
     {
         case 0x0:  
@@ -61,7 +69,7 @@ void CHIP8::perfInstruction()
                     pc = stack[sp];
                 }
             }
-            else notImp();                               //dont really need this, not used mostly
+            else notImp(opcode);                               //dont really need this, not used mostly
             break;
         }
         case 0x1:                                        //goto NNN
@@ -221,19 +229,24 @@ void CHIP8::perfInstruction()
         }
         case 0xD:
         {
+            //std::cout<<"DrawCall\n";
             uint16_t x = getX(opcode);
             uint16_t y = getY(opcode);
             uint16_t n = getN(opcode);
-            
+
+            uint8_t vf = 0;
+
             for(uint8_t i=0; i<n; i++)
             {
-                renderer.drawByte(registers[x], registers[y]+i, memory[I+i]);
+                vf != renderer.drawByte(registers[x], registers[y]+i, memory[I+i]);
             }
+            //std::cout<<"Drawn\n";
+            registers[0xF] = vf;
             break;
         }
         case 0xE:
         {
-            notImp();
+            notImp(opcode);
             break;
         }
         case 0xF:
@@ -248,7 +261,7 @@ void CHIP8::perfInstruction()
                 }
                 case 0x0A:
                 {
-                    notImp();
+                    notImp(opcode);
                     break;
                 }
                 case 0x15:
@@ -268,7 +281,7 @@ void CHIP8::perfInstruction()
                 }
                 case 0x29:
                 {
-                    notImp();
+                    notImp(opcode);
                     break;
                 }
                 case 0x33:
@@ -300,18 +313,29 @@ void CHIP8::perfInstruction()
             }
         }
     }
+    pc += 2;
 }
 
-void CHIP8::notImp()
+void CHIP8::notImp(uint16_t opc)
 {
-    std::cout<<"Not Imp\n";
+    //printStatus();
+    std::cout<<"Not Imp "<<std::hex<<opc<<std::endl;
+}
+
+void CHIP8::printStatus()
+{
+    for(int i=0; i<16; i++)
+    {
+        std::cout<<std::hex<<(int)registers[i]<<' ';
+    }
+    std::cout<<std::endl;
 }
 
 //helper fucntions to get part of the opcode
 uint16_t CHIP8::getNNN(uint16_t opc) {return (opc & ((1<<12) - 1));}
 uint16_t CHIP8::getNN(uint16_t opc) {return (opc & ((1<<8) - 1));}
 uint16_t CHIP8::getN(uint16_t opc) {return (opc & ((1<<4) - 1));}
-uint16_t CHIP8::getX(uint16_t opc) {return (opc & (((1<<4) - 1) << 8));}
-uint16_t CHIP8::getY(uint16_t opc) {return (opc & (((1<<4) - 1) << 4));}
+uint16_t CHIP8::getX(uint16_t opc) {return (opc & (((1<<4) - 1) << 8))>>8;}
+uint16_t CHIP8::getY(uint16_t opc) {return (opc & (((1<<4) - 1) << 4))>>4;}
 uint16_t CHIP8::getTop(uint16_t opc) {return (opc >> 12);}
 
